@@ -391,26 +391,25 @@ def merge_and_write(
     size_mb = mapping_path.stat().st_size / 1e6
     print(f"  Wrote {len(gene_to_uniprot)} mappings ({size_mb:.1f} MB compressed)")
 
-    # Write plain CSV versions to public/ for WASM deployment
+    # Write feather files to public/ for WASM deployment
+    import pandas as pd
+
     public_dir = Path(__file__).parent / "public"
     public_dir.mkdir(exist_ok=True)
 
-    pub_interactions = public_dir / "interactions.csv"
+    pub_interactions = public_dir / "interactions.feather"
     print(f"\n=== Writing {pub_interactions} ===")
-    with open(pub_interactions, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=rows[0].keys())
-        writer.writeheader()
-        writer.writerows(rows)
+    pd.DataFrame(rows).to_feather(pub_interactions)
     size_mb = pub_interactions.stat().st_size / 1e6
     print(f"  Wrote {len(rows)} interactions ({size_mb:.1f} MB)")
 
-    pub_mapping = public_dir / "gene_uniprot_map.csv"
+    pub_mapping = public_dir / "gene_uniprot_map.feather"
     print(f"\n=== Writing {pub_mapping} ===")
-    with open(pub_mapping, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["gene_symbol", "uniprot_id"])
-        for gene, uniprot in sorted(gene_to_uniprot.items()):
-            writer.writerow([gene, uniprot])
+    mapping_rows = [
+        {"gene_symbol": gene, "uniprot_id": uniprot}
+        for gene, uniprot in sorted(gene_to_uniprot.items())
+    ]
+    pd.DataFrame(mapping_rows).to_feather(pub_mapping)
     size_mb = pub_mapping.stat().st_size / 1e6
     print(f"  Wrote {len(gene_to_uniprot)} mappings ({size_mb:.1f} MB)")
 

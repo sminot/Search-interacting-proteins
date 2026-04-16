@@ -29,14 +29,51 @@ def _(mo):
 
 
 @app.cell
-def _(mo):
-    import pandas as pd
+def _():
+    import sys
+    if "pyodide" in sys.modules:
+        import micropip
+    else:
+        micropip = None
+    return (micropip,)
 
+
+@app.cell
+async def _(micropip, mo):
+    with mo.status.spinner("Loading dependencies"):
+        if micropip is not None:
+            await micropip.install("pyarrow")
+        import pyarrow
+        import pandas as pd
+        import requests
+        from io import BytesIO
+    return BytesIO, pd, requests
+
+
+@app.cell
+def _(BytesIO, micropip, pd, requests):
+    def read_feather(data_path) -> pd.DataFrame:
+        if micropip is None:
+            return pd.read_feather(data_path)
+        else:
+            response = requests.get(data_path, stream=True)
+            response.raise_for_status()
+            content = response.raw.read(decode_content=True)
+            return pd.read_feather(BytesIO(content))
+    return (read_feather,)
+
+
+@app.cell
+def _(mo, read_feather):
     with mo.status.spinner("Loading interaction database..."):
         _base = mo.notebook_location()
-        interactions_df = pd.read_csv(str(_base / "public" / "interactions.csv"))
-        gene_map_df = pd.read_csv(str(_base / "public" / "gene_uniprot_map.csv"))
-    return gene_map_df, interactions_df, pd
+        interactions_df = read_feather(
+            str(_base / "public" / "interactions.feather")
+        )
+        gene_map_df = read_feather(
+            str(_base / "public" / "gene_uniprot_map.feather")
+        )
+    return gene_map_df, interactions_df
 
 
 @app.cell
