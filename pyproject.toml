@@ -1,0 +1,15 @@
+[project]
+name = "search-interacting-proteins"
+version = "0.1.0"
+description = "Web tool to find predicted physical interactions between two lists of proteins"
+requires-python = ">=3.11"
+dependencies = [
+    "marimo>=0.13.0",
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+]
+
+[project.optional-dependencies]
+build = [
+    "requests>=2.31",
+]
