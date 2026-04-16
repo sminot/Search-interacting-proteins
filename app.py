@@ -270,7 +270,20 @@ def _(mo, resolved_a, resolved_b, unresolved_a, unresolved_b):
 
 
 @app.cell
-def _(gene_to_uniprot, interactions, resolved_a, resolved_b):
+def _(gene_to_uniprot, interactions, pd, resolved_a, resolved_b):
+    def _safe_int(val):
+        try:
+            if pd.isna(val):
+                return 0
+            return int(val)
+        except (ValueError, TypeError):
+            return 0
+
+    def _safe_str(val):
+        if pd.isna(val):
+            return ""
+        return str(val)
+
     def _search():
         if not resolved_a or not resolved_b:
             return []
@@ -291,19 +304,19 @@ def _(gene_to_uniprot, interactions, resolved_a, resolved_b):
                         "Gene B": gb,
                         "UniProt A": gene_to_uniprot.get(ga, ""),
                         "UniProt B": gene_to_uniprot.get(gb, ""),
-                        "STRING Score": row.get("string_score", ""),
-                        "STRING Experimental": row.get("string_experimental", ""),
-                        "STRING Database": row.get("string_database", ""),
-                        "BioGRID Systems": row.get("biogrid_systems", ""),
-                        "HuRI": "Yes" if str(row.get("huri", "0")) == "1" else "",
-                        "Sources": str(row.get("sources", "")).replace("|", ", "),
-                        "# Sources": row.get("num_sources", ""),
+                        "STRING Score": _safe_int(row.get("string_score")) or "",
+                        "STRING Experimental": _safe_int(row.get("string_experimental")) or "",
+                        "STRING Database": _safe_int(row.get("string_database")) or "",
+                        "BioGRID Systems": _safe_str(row.get("biogrid_systems", "")),
+                        "HuRI": "Yes" if _safe_int(row.get("huri")) == 1 else "",
+                        "Sources": _safe_str(row.get("sources", "")).replace("|", ", "),
+                        "# Sources": _safe_int(row.get("num_sources")),
                     })
 
         results.sort(
             key=lambda r: (
-                -int(r["# Sources"]) if r["# Sources"] else 0,
-                -int(r["STRING Score"]) if r["STRING Score"] else 0,
+                -(r["# Sources"] or 0),
+                -(r["STRING Score"] or 0),
             )
         )
         return results
