@@ -32,9 +32,10 @@ def _(mo):
 def _(mo):
     import pandas as pd
 
-    _base = mo.notebook_location()
-    interactions_df = pd.read_csv(str(_base / "public" / "interactions.csv"))
-    gene_map_df = pd.read_csv(str(_base / "public" / "gene_uniprot_map.csv"))
+    with mo.status.spinner("Loading interaction database..."):
+        _base = mo.notebook_location()
+        interactions_df = pd.read_csv(str(_base / "public" / "interactions.csv"))
+        gene_map_df = pd.read_csv(str(_base / "public" / "gene_uniprot_map.csv"))
     return gene_map_df, interactions_df, pd
 
 
@@ -102,22 +103,33 @@ def _(mo):
 
 @app.cell
 def _(mo):
+    EXAMPLE_A = "TP53\nBRCA1\nEGFR\nKRAS\nRB1\nBCL2"
+    EXAMPLE_B = "MDM2\nMDM4\nATM\nCHEK2\nGRB2\nBRAF\nBAX\nE2F1"
+
+    load_example = mo.ui.run_button(label="Load example (cancer signaling)")
+    return EXAMPLE_A, EXAMPLE_B, load_example
+
+
+@app.cell
+def _(mo):
     file_a = mo.ui.file(filetypes=[".txt", ".csv", ".tsv"], label="Upload List A", kind="area")
     file_b = mo.ui.file(filetypes=[".txt", ".csv", ".tsv"], label="Upload List B", kind="area")
     return file_a, file_b
 
 
 @app.cell
-def _(mo):
+def _(EXAMPLE_A, EXAMPLE_B, load_example, mo):
     text_a = mo.ui.text_area(
         label="List A (one protein per line)",
         placeholder="TP53\nBRCA1\nEGFR\nKRAS",
+        value=EXAMPLE_A if load_example.value else "",
         full_width=True,
         rows=8,
     )
     text_b = mo.ui.text_area(
         label="List B (one protein per line)",
         placeholder="MDM2\nATM\nGRB2\nBRAF",
+        value=EXAMPLE_B if load_example.value else "",
         full_width=True,
         rows=8,
     )
@@ -125,15 +137,18 @@ def _(mo):
 
 
 @app.cell
-def _(file_a, file_b, mo, text_a, text_b):
-    mo.hstack(
-        [
-            mo.vstack([mo.md("### List A"), file_a, text_a]),
-            mo.vstack([mo.md("### List B"), file_b, text_b]),
-        ],
-        widths="equal",
-        gap=2,
-    )
+def _(file_a, file_b, load_example, mo, text_a, text_b):
+    mo.vstack([
+        mo.hstack([load_example], justify="center"),
+        mo.hstack(
+            [
+                mo.vstack([mo.md("### List A"), file_a, text_a]),
+                mo.vstack([mo.md("### List B"), file_b, text_b]),
+            ],
+            widths="equal",
+            gap=2,
+        ),
+    ])
     return
 
 
@@ -286,7 +301,7 @@ def _(mo, resolved_a, resolved_b, results):
 
 
 @app.cell
-def _(mo, pd, results):
+def _(mo, pd, resolved_a, resolved_b, results):
     if results:
         results_df = pd.DataFrame(results)
         results_table = mo.ui.table(
@@ -297,7 +312,20 @@ def _(mo, pd, results):
         )
     else:
         results_df = pd.DataFrame()
-        results_table = mo.md("*No interactions found. Try adding more proteins to your lists.*")
+        if resolved_a and resolved_b:
+            results_table = mo.callout(
+                mo.md(
+                    "**No interactions found** between these two lists.\n\n"
+                    "This means none of the databases (STRING, BioGRID, HuRI) "
+                    "report a physical interaction for any pair across your two lists. "
+                    "Try broadening your lists or checking for typos."
+                ),
+                kind="info",
+            )
+        else:
+            results_table = mo.md(
+                "*Enter proteins in both lists above to search for interactions.*"
+            )
 
     results_table
     return (results_df,)
