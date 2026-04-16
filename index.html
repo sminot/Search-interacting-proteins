@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>Protein Interaction Search</title>
+    <script type="module" crossorigin src="./assets/index-y6osgSWB.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-D2MJg03u.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-Blw4afVn.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-DGjKht0c.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-JieDVWC_.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-CU2C3Vxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-BLne0bXb.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-DXARUlxo.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BZwMGX81.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-XrBBnd7s.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-DYvqRARy.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-CwbVR_sO.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-COIw2x9i.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-k58KVlT-.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-Dtw5N98_.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-sZgjGm4S.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-w-Qo9n0R.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-B-sKate2.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-Bv2rCglF.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-BwwUWhww.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-DmqhBBs6.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BDYuj3zG.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-CkiqGLcK.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/isArrayLikeObject-ODovYgPQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-BOaDhCTH.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-8btzWeZg.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-DxQeE5uh.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-DXdzqzcr.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-BLWK1eKa.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-tOPFFcLZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-DdnWW30b.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-DoZCLcOb.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-9-v2bhoi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-N3bfh_O1.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-CbdaHKzX.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-DCDmxPD0.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DAC2orgH.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-pfr2N700.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-hq2TLzOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-BmGdj50E.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-CYlwteGD.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-BzSgteR-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-VwkX7yeV.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BNTOYRCs.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DZJfxwLb.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CxquLoAZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Dnlw22ji.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-4lB-oR9j.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BvlMLwcr.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CgYlATe-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BPkOpnKv.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-jWatZkll.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-BGIVWsZ9.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-BFDc-_i_.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-D5tzp-Y6.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/toNumber-BvwE1TMv.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-DNX1lT2d.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-BbSyBDA8.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-BxfYZ6ML.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-BNL5rxQw.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-BqYYXi6G.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-CxTq44MI.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-BUtlbGdu.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-CeM6oPsT.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-C2mTH3GM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-H-hXtEOq.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-LVL1r3-M.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers--nDjbAPa.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-D3zWcDme.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-DGqo1TbK.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-wQU1z0W_.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-BXMIcLWP.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-DNCT6U6R.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-hsPVDTG-.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-CRkrHl-y.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-MSuUqmbC.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-DF3HbVtk.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-CgvDWFE3.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-DrHAuMTb.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DOybeRem.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-DFYAOTWd.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-Bizk-4hH.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-DFMsQ6MJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-Ci08KCdY.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-CM3WMmA8.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-COFRe84u.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-DPomuurt.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-B79Qf6ma.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-Bmp8DLLo.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-C5wIpWgQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-DGqJ93hW.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-DzMo6UAI.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-aCoWDe-l.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-CsrwfW0n.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-DzSMahmM.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-Cyc7d5AB.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-DNANigO8.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-DnzBp4l4.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-AtoFZ7i4.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-CZb6hI2x.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-5XbM3TL_.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-B03CpBmt.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-C8jvQ1Lj.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-frvr6JXK.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-BQHP_yQk.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-JRtp5zfw.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-U-UFA9KI.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-stqTIkXD.js">
+    <link rel="modulepreload" crossorigin href="./assets/maps-B4xARV9R.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-Co37_JfG.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DYxi7n2b.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-BEz9SEXo.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-BUYTQ32a.js">
+    <link rel="modulepreload" crossorigin href="./assets/toFinite-2vTWYoIX.js">
+    <link rel="modulepreload" crossorigin href="./assets/range-D-0CV4c0.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-qC3alE1r.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-DidENKDy.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-DiHwtSG8.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-BUNcfKXO.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-CavtrueA.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-CsXoiEZx.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-BecUoMho.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-DqqZbNbU.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-vertical-DEH0lwkn.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-CiOe0azG.js">
+    <link rel="modulepreload" crossorigin href="./assets/components-DKHyHZBv.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-AfcgbFG_.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-DlzgV4KY.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-XObNWtN8.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAddCell-B6yUY_RG.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-smPWkHxB.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-BqofWdD5.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-DgRJ-xBZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-BYq_Btg-.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-CI_b818F.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-5_PGMxRL.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-l37OnSN4.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-BgkzrnsX.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-Bj5YoM7H.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-YkPg_CVc.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-Qeh-bHlj.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-Bu6OEURn.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-0LPgOyiW.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-CTort_or.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-BwAF2XN5.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-D7jeR2wg.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-49dbm-yb.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-D1n-olwf.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-C89F4v17.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-CS2o3y4W.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-CfYqAbmq.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-DunI72kV.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-BJ6VFU8l.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-DrDh2657.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-DaQqUJ5I.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-DzigvqmT.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-Dk1Mb_so.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-D0WTlCXt.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-BteCqkNg.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-D7Ur9Qxq.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-BFRDxSKF.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-ISEb5HNL.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-DafhTYio.js">
+    <link rel="modulepreload" crossorigin href="./assets/_basePickBy-C0EPK3Lm.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-neNJUP_8.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-DxxzgVgU.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-COtNnHUC.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-DJ8dAd4j.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-BIoPrMH_.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-jmgGt1lS.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-B7vuddcd.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CKRn_SiB.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="">import%20marimo%0A%0A__generated_with%20%3D%20%220.23.1%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22%2C%20app_title%3D%22Protein%20Interaction%20Search%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%0A%20%20%20%20return%20(mo%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%22%22%0A%20%20%20%20%23%20Protein%20Interaction%20Search%0A%0A%20%20%20%20Upload%20two%20lists%20of%20proteins%20to%20find%20predicted%20physical%20interactions%20between%20them.%0A%0A%20%20%20%20**Data%20sources%3A**%20%5BSTRING%20v12.0%5D(https%3A%2F%2Fstring-db.org%2F)%20(physical%20links)%20%7C%0A%20%20%20%20%5BBioGRID%5D(https%3A%2F%2Fthebiogrid.org%2F)%20%7C%20%5BHuRI%5D(https%3A%2F%2Fwww.interactome-atlas.org%2F)%0A%0A%20%20%20%20Interactions%20are%20shown%20when%20at%20least%20one%20database%20reports%20evidence%20for%20a%20physical%0A%20%20%20%20interaction%20between%20a%20protein%20from%20List%20A%20and%20a%20protein%20from%20List%20B.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20import%20pandas%20as%20pd%0A%0A%20%20%20%20_base%20%3D%20mo.notebook_location()%0A%20%20%20%20interactions_df%20%3D%20pd.read_csv(str(_base%20%2F%20%22public%22%20%2F%20%22interactions.csv%22))%0A%20%20%20%20gene_map_df%20%3D%20pd.read_csv(str(_base%20%2F%20%22public%22%20%2F%20%22gene_uniprot_map.csv%22))%0A%20%20%20%20return%20gene_map_df%2C%20interactions_df%2C%20pd%0A%0A%0A%40app.cell%0Adef%20_(gene_map_df%2C%20interactions_df%2C%20pd)%3A%0A%20%20%20%20def%20_build_indices(idf%2C%20mdf)%3A%0A%20%20%20%20%20%20%20%20%22%22%22Build%20lookup%20dictionaries%20from%20the%20loaded%20DataFrames.%22%22%22%0A%20%20%20%20%20%20%20%20interactions%20%3D%20%7B%7D%0A%20%20%20%20%20%20%20%20gene_to_uniprot%20%3D%20%7B%7D%0A%20%20%20%20%20%20%20%20alias_to_gene%20%3D%20%7B%7D%0A%0A%20%20%20%20%20%20%20%20for%20_%2C%20row%20in%20idf.iterrows()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20ga%2C%20gb%20%3D%20row%5B%22gene_a%22%5D%2C%20row%5B%22gene_b%22%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20interactions%5B(ga%2C%20gb)%5D%20%3D%20row.to_dict()%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20gene%2C%20up_key%20in%20%5B(ga%2C%20%22uniprot_a%22)%2C%20(gb%2C%20%22uniprot_b%22)%5D%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20up%20%3D%20row.get(up_key%2C%20%22%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20alias_to_gene%5Bgene.upper()%5D%20%3D%20gene%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20alias_to_gene%5Bgene.lower()%5D%20%3D%20gene%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20pd.notna(up)%20and%20up%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20up%20%3D%20str(up)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20gene_to_uniprot%5Bgene%5D%20%3D%20up%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20alias_to_gene%5Bup.upper()%5D%20%3D%20gene%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20alias_to_gene%5Bup.lower()%5D%20%3D%20gene%0A%0A%20%20%20%20%20%20%20%20for%20_%2C%20row%20in%20mdf.iterrows()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20gene%20%3D%20str(row%5B%22gene_symbol%22%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20up%20%3D%20str(row%5B%22uniprot_id%22%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20gene_to_uniprot%5Bgene%5D%20%3D%20up%0A%20%20%20%20%20%20%20%20%20%20%20%20alias_to_gene%5Bgene.upper()%5D%20%3D%20gene%0A%20%20%20%20%20%20%20%20%20%20%20%20alias_to_gene%5Bgene.lower()%5D%20%3D%20gene%0A%20%20%20%20%20%20%20%20%20%20%20%20alias_to_gene%5Bup.upper()%5D%20%3D%20gene%0A%20%20%20%20%20%20%20%20%20%20%20%20alias_to_gene%5Bup.lower()%5D%20%3D%20gene%0A%0A%20%20%20%20%20%20%20%20return%20interactions%2C%20gene_to_uniprot%2C%20alias_to_gene%0A%0A%20%20%20%20interactions%2C%20gene_to_uniprot%2C%20alias_to_gene%20%3D%20_build_indices(%0A%20%20%20%20%20%20%20%20interactions_df%2C%20gene_map_df%0A%20%20%20%20)%0A%20%20%20%20db_size%20%3D%20len(interactions)%0A%20%20%20%20return%20alias_to_gene%2C%20db_size%2C%20gene_to_uniprot%2C%20interactions%0A%0A%0A%40app.cell%0Adef%20_(db_size%2C%20mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20f%22**Database%20loaded%3A**%20%7Bdb_size%3A%2C%7D%20protein%20pairs%20from%20STRING%2C%20BioGRID%2C%20and%20HuRI.%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%22%22%0A%20%20%20%20%23%23%20Input%0A%0A%20%20%20%20Enter%20protein%20identifiers%20below%20%E2%80%94%20one%20per%20line.%20You%20can%20use%20**gene%20symbols**%0A%20%20%20%20(e.g.%20%60TP53%60%2C%20%60BRCA1%60)%20or%20**UniProt%20accessions**%20(e.g.%20%60P04637%60).%0A%20%20%20%20Alternatively%2C%20upload%20a%20text%20file%20(one%20identifier%20per%20line).%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20file_a%20%3D%20mo.ui.file(filetypes%3D%5B%22.txt%22%2C%20%22.csv%22%2C%20%22.tsv%22%5D%2C%20label%3D%22Upload%20List%20A%22%2C%20kind%3D%22area%22)%0A%20%20%20%20file_b%20%3D%20mo.ui.file(filetypes%3D%5B%22.txt%22%2C%20%22.csv%22%2C%20%22.tsv%22%5D%2C%20label%3D%22Upload%20List%20B%22%2C%20kind%3D%22area%22)%0A%20%20%20%20return%20file_a%2C%20file_b%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20text_a%20%3D%20mo.ui.text_area(%0A%20%20%20%20%20%20%20%20label%3D%22List%20A%20(one%20protein%20per%20line)%22%2C%0A%20%20%20%20%20%20%20%20placeholder%3D%22TP53%5CnBRCA1%5CnEGFR%5CnKRAS%22%2C%0A%20%20%20%20%20%20%20%20full_width%3DTrue%2C%0A%20%20%20%20%20%20%20%20rows%3D8%2C%0A%20%20%20%20)%0A%20%20%20%20text_b%20%3D%20mo.ui.text_area(%0A%20%20%20%20%20%20%20%20label%3D%22List%20B%20(one%20protein%20per%20line)%22%2C%0A%20%20%20%20%20%20%20%20placeholder%3D%22MDM2%5CnATM%5CnGRB2%5CnBRAF%22%2C%0A%20%20%20%20%20%20%20%20full_width%3DTrue%2C%0A%20%20%20%20%20%20%20%20rows%3D8%2C%0A%20%20%20%20)%0A%20%20%20%20return%20text_a%2C%20text_b%0A%0A%0A%40app.cell%0Adef%20_(file_a%2C%20file_b%2C%20mo%2C%20text_a%2C%20text_b)%3A%0A%20%20%20%20mo.hstack(%0A%20%20%20%20%20%20%20%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.vstack(%5Bmo.md(%22%23%23%23%20List%20A%22)%2C%20file_a%2C%20text_a%5D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.vstack(%5Bmo.md(%22%23%23%23%20List%20B%22)%2C%20file_b%2C%20text_b%5D)%2C%0A%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%20%20%20%20widths%3D%22equal%22%2C%0A%20%20%20%20%20%20%20%20gap%3D2%2C%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.function%0Adef%20parse_proteins(text%3A%20str)%20-%3E%20list%5Bstr%5D%3A%0A%20%20%20%20%22%22%22Parse%20a%20text%20block%20into%20a%20list%20of%20protein%20identifiers.%22%22%22%0A%20%20%20%20proteins%20%3D%20%5B%5D%0A%20%20%20%20for%20line%20in%20text.strip().splitlines()%3A%0A%20%20%20%20%20%20%20%20line%20%3D%20line.strip()%0A%20%20%20%20%20%20%20%20%23%20Handle%20CSV%2FTSV%3A%20take%20first%20column%0A%20%20%20%20%20%20%20%20for%20sep%20in%20%5B%22%5Ct%22%2C%20%22%2C%22%2C%20%22%20%22%5D%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20sep%20in%20line%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20line%20%3D%20line.split(sep)%5B0%5D.strip()%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20break%0A%20%20%20%20%20%20%20%20if%20line%20and%20not%20line.startswith(%22%23%22)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20proteins.append(line)%0A%20%20%20%20return%20proteins%0A%0A%0A%40app.cell%0Adef%20_(file_a%2C%20file_b%2C%20text_a%2C%20text_b)%3A%0A%20%20%20%20def%20_get_list(file_widget%2C%20text_widget)%3A%0A%20%20%20%20%20%20%20%20if%20file_widget.value%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20content%20%3D%20file_widget.value%5B0%5D.contents.decode(%22utf-8%22%2C%20errors%3D%22ignore%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20parse_proteins(content)%0A%20%20%20%20%20%20%20%20return%20parse_proteins(text_widget.value%20or%20%22%22)%0A%0A%20%20%20%20list_a_raw%20%3D%20_get_list(file_a%2C%20text_a)%0A%20%20%20%20list_b_raw%20%3D%20_get_list(file_b%2C%20text_b)%0A%20%20%20%20return%20list_a_raw%2C%20list_b_raw%0A%0A%0A%40app.cell%0Adef%20_(alias_to_gene%2C%20list_a_raw%2C%20list_b_raw)%3A%0A%20%20%20%20def%20_resolve(raw_list)%3A%0A%20%20%20%20%20%20%20%20resolved%20%3D%20%7B%7D%0A%20%20%20%20%20%20%20%20unresolved%20%3D%20%5B%5D%0A%20%20%20%20%20%20%20%20for%20identifier%20in%20raw_list%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20gene%20%3D%20alias_to_gene.get(identifier.upper())%20or%20alias_to_gene.get(identifier)%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20gene%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20resolved%5Bgene%5D%20%3D%20identifier%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20unresolved.append(identifier)%0A%20%20%20%20%20%20%20%20return%20resolved%2C%20unresolved%0A%0A%20%20%20%20resolved_a%2C%20unresolved_a%20%3D%20_resolve(list_a_raw)%0A%20%20%20%20resolved_b%2C%20unresolved_b%20%3D%20_resolve(list_b_raw)%0A%20%20%20%20return%20resolved_a%2C%20resolved_b%2C%20unresolved_a%2C%20unresolved_b%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20resolved_a%2C%20resolved_b%2C%20unresolved_a%2C%20unresolved_b)%3A%0A%20%20%20%20_parts%20%3D%20%5B%5D%0A%0A%20%20%20%20if%20resolved_a%20or%20resolved_b%3A%0A%20%20%20%20%20%20%20%20_parts.append(%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22**Resolved%3A**%20%7Blen(resolved_a)%7D%20proteins%20in%20List%20A%2C%20%22%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22%7Blen(resolved_b)%7D%20proteins%20in%20List%20B%22%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20if%20unresolved_a%3A%0A%20%20%20%20%20%20%20%20_parts.append(%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20f%22**List%20A%20%E2%80%94%20unrecognized%3A**%20%7B'%2C%20'.join(unresolved_a%5B%3A20%5D)%7D%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2B%20(%22%20...%22%20if%20len(unresolved_a)%20%3E%2020%20else%20%22%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22warn%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20if%20unresolved_b%3A%0A%20%20%20%20%20%20%20%20_parts.append(%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20f%22**List%20B%20%E2%80%94%20unrecognized%3A**%20%7B'%2C%20'.join(unresolved_b%5B%3A20%5D)%7D%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2B%20(%22%20...%22%20if%20len(unresolved_b)%20%3E%2020%20else%20%22%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22warn%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20mo.vstack(_parts)%20if%20_parts%20else%20None%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(gene_to_uniprot%2C%20interactions%2C%20resolved_a%2C%20resolved_b)%3A%0A%20%20%20%20def%20_search()%3A%0A%20%20%20%20%20%20%20%20if%20not%20resolved_a%20or%20not%20resolved_b%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B%5D%0A%0A%20%20%20%20%20%20%20%20results%20%3D%20%5B%5D%0A%20%20%20%20%20%20%20%20genes_a%20%3D%20set(resolved_a.keys())%0A%20%20%20%20%20%20%20%20genes_b%20%3D%20set(resolved_b.keys())%0A%0A%20%20%20%20%20%20%20%20for%20ga%20in%20genes_a%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20gb%20in%20genes_b%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20ga%20%3D%3D%20gb%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20continue%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20key%20%3D%20(ga%2C%20gb)%20if%20ga%20%3C%20gb%20else%20(gb%2C%20ga)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20row%20%3D%20interactions.get(key)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20row%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20results.append(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22Gene%20A%22%3A%20ga%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22Gene%20B%22%3A%20gb%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22UniProt%20A%22%3A%20gene_to_uniprot.get(ga%2C%20%22%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22UniProt%20B%22%3A%20gene_to_uniprot.get(gb%2C%20%22%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22STRING%20Score%22%3A%20row.get(%22string_score%22%2C%20%22%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22STRING%20Experimental%22%3A%20row.get(%22string_experimental%22%2C%20%22%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22STRING%20Database%22%3A%20row.get(%22string_database%22%2C%20%22%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22BioGRID%20Systems%22%3A%20row.get(%22biogrid_systems%22%2C%20%22%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22HuRI%22%3A%20%22Yes%22%20if%20str(row.get(%22huri%22%2C%20%220%22))%20%3D%3D%20%221%22%20else%20%22%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22Sources%22%3A%20str(row.get(%22sources%22%2C%20%22%22)).replace(%22%7C%22%2C%20%22%2C%20%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%23%20Sources%22%3A%20row.get(%22num_sources%22%2C%20%22%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D)%0A%0A%20%20%20%20%20%20%20%20results.sort(%0A%20%20%20%20%20%20%20%20%20%20%20%20key%3Dlambda%20r%3A%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20-int(r%5B%22%23%20Sources%22%5D)%20if%20r%5B%22%23%20Sources%22%5D%20else%200%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20-int(r%5B%22STRING%20Score%22%5D)%20if%20r%5B%22STRING%20Score%22%5D%20else%200%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20return%20results%0A%0A%20%20%20%20results%20%3D%20_search()%0A%20%20%20%20return%20(results%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20resolved_a%2C%20resolved_b%2C%20results)%3A%0A%20%20%20%20_has_input%20%3D%20bool(resolved_a%20and%20resolved_b)%0A%0A%20%20%20%20if%20_has_input%3A%0A%20%20%20%20%20%20%20%20_total_possible%20%3D%20len(resolved_a)%20*%20len(resolved_b)%0A%20%20%20%20%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22%22%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%23%20Results%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20Found%20**%7Blen(results)%7D**%20interactions%20out%20of%20%7B_total_possible%3A%2C%7D%20possible%0A%20%20%20%20%20%20%20%20%20%20%20%20pairs%20(%7Blen(resolved_a)%7D%20x%20%7Blen(resolved_b)%7D%20proteins).%0A%20%20%20%20%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%23%20Results%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20Enter%20proteins%20in%20both%20lists%20above%20to%20search%20for%20interactions.%0A%20%20%20%20%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20pd%2C%20results)%3A%0A%20%20%20%20if%20results%3A%0A%20%20%20%20%20%20%20%20results_df%20%3D%20pd.DataFrame(results)%0A%20%20%20%20%20%20%20%20results_table%20%3D%20mo.ui.table(%0A%20%20%20%20%20%20%20%20%20%20%20%20results_df%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20selection%3DNone%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20page_size%3D20%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Interacting%20protein%20pairs%22%2C%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20results_df%20%3D%20pd.DataFrame()%0A%20%20%20%20%20%20%20%20results_table%20%3D%20mo.md(%22*No%20interactions%20found.%20Try%20adding%20more%20proteins%20to%20your%20lists.*%22)%0A%0A%20%20%20%20results_table%0A%20%20%20%20return%20(results_df%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20results%2C%20results_df)%3A%0A%20%20%20%20if%20results%3A%0A%20%20%20%20%20%20%20%20_csv_data%20%3D%20results_df.to_csv(index%3DFalse)%0A%20%20%20%20%20%20%20%20mo.download(%0A%20%20%20%20%20%20%20%20%20%20%20%20data%3D_csv_data.encode(%22utf-8%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20filename%3D%22protein_interactions.csv%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mimetype%3D%22text%2Fcsv%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Download%20results%20as%20CSV%22%2C%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%22%22%0A%20%20%20%20---%0A%0A%20%20%20%20%23%23%23%20About%0A%0A%20%20%20%20This%20tool%20searches%20for%20known%20and%20predicted%20physical%20protein-protein%20interactions%0A%20%20%20%20across%20three%20complementary%20databases%3A%0A%0A%20%20%20%20%7C%20Source%20%7C%20Description%20%7C%20Evidence%20type%20%7C%0A%20%20%20%20%7C--------%7C-------------%7C---------------%7C%0A%20%20%20%20%7C%20**STRING**%20%7C%20Integrated%20interaction%20database%20(physical%20sub-network%2C%20score%20%3E%3D%20400)%20%7C%20Combined%20computational%20%2B%20experimental%20%7C%0A%20%20%20%20%7C%20**BioGRID**%20%7C%20Literature-curated%20interactions%20%7C%20Experimental%20methods%20(AP-MS%2C%20Y2H%2C%20etc.)%20%7C%0A%20%20%20%20%7C%20**HuRI**%20%7C%20Human%20Reference%20Interactome%20%7C%20Systematic%20yeast%20two-hybrid%20screens%20%7C%0A%0A%20%20%20%20**STRING%20score%20interpretation%3A**%200-1000%20scale.%0A%20%20%20%20Low%20confidence%20%3E%3D%20150%2C%20Medium%20%3E%3D%20400%2C%20High%20%3E%3D%20700%2C%20Highest%20%3E%3D%20900.%0A%0A%20%20%20%20**How%20to%20cite%3A**%0A%20%20%20%20-%20STRING%3A%20Szklarczyk%20et%20al.%2C%20*Nucleic%20Acids%20Res.*%202023%0A%20%20%20%20-%20BioGRID%3A%20Oughtred%20et%20al.%2C%20*Nucleic%20Acids%20Res.*%202021%0A%20%20%20%20-%20HuRI%3A%20Luck%20et%20al.%2C%20*Nature*%202020%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      window.__MARIMO_MOUNT_CONFIG__ = {
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.1",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"app_title": "Protein Interaction Search", "sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        };
+    </script>
+  </body>
+</html>
